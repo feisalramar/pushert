@@ -1,7 +1,0 @@
-{ 
-    "secret":"",
-    "key":"",
-    "cluster":"eu",
-    "tls":true,
-    "appId":0 
-}

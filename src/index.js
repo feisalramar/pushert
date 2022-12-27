@@ -5,9 +5,32 @@ const cfg = require('config')
 const Pusher = require("pusher");
 const { writeFileSync, readFileSync } = require('jsonfile')
 const configFile = './config/default.json'
+const chalk = require('chalk')
 
 const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv)).argv
+
+const isConfigured = () => {
+    if (!cfg.has('secret') || cfg.get('secret') === "") {
+        console.log(chalk.red("Please set Pusher API Secret"))
+        console.log(chalk.cyan(`To configure run "${chalk.yellow(chalk.italic('pushert config --secret="******" '))}`))
+        return false
+    } else if (!cfg.has('key') || cfg.get('key') === "") {
+        console.log(chalk.red("Please set Pusher API Key"))
+        console.log(chalk.cyan(`To configure run "${chalk.yellow(chalk.italic('pushert config --key="******" '))}`))
+        return false
+    } else if (!cfg.has('appId') || cfg.get('appId') === "") {
+        console.log(chalk.red("Please set Application ID"))
+        console.log(chalk.cyan(`To configure run "${chalk.yellow(chalk.italic('pushert config --id="******" '))}`))
+        return false
+    } else {
+        return true
+    }
+}
+
+const isInConfig = (property) => {
+    return cfg.has(property)
+}
 
 function main() {
     try {
@@ -19,11 +42,11 @@ function main() {
                 // This is the configration path
                 // Getting the default/current configrations
                 const pusherConfig = {
-                    secret: cfg.get("secret"),
-                    key: cfg.get("key"),
-                    cluster: cfg.get("cluster"),
-                    tls: cfg.get("tls"),
-                    appId: cfg.get("appId")
+                    secret: isInConfig('secret') ? cfg.get("secret") : "",
+                    key: isInConfig('key') ? cfg.get("key") : "",
+                    cluster: isInConfig('cluster') ? cfg.get("cluster") : "eu",
+                    tls: isInConfig('tls') ? cfg.get("tls") : false,
+                    appId: isInConfig('appId') ? cfg.get("appId") : "",
                 }
 
                 // Check if user is trying to override secret value
@@ -56,7 +79,10 @@ function main() {
                     console.log(pusherConfig)
                 }
             } else {
-                // The first command is not a message 
+                if (!isConfigured()) {
+                    return;
+                }
+                // The first command is not a message
                 const pusher = new Pusher({
                     secret: cfg.get('secret'),
                     key: cfg.get('key'),
@@ -73,23 +99,35 @@ function main() {
 
                     // Validation The third command must be jison object, first and second command is String
                     (async () => {
-                        await pusher.trigger(
-                            secondCommand,
-                            firstCommand,
-                            thirdCommand
-                        )
+                        try {
+                            await pusher.trigger(
+                                secondCommand,
+                                firstCommand,
+                                thirdCommand
+                            )
+                            // TODO : format output message
+                            console.log(chalk.italic(`"${chalk.green(firstCommand)}" sent to channel "${chalk.yellow(secondCommand)}" with ${chalk.magenta(thirdCommand)} `))
+                        } catch (error) {
+                            console.table(error)
+                        }
                     })()
                 }
                 else if (secondCommand) {
 
                     (async () => {
-                        await pusher.trigger(
-                            secondCommand,
-                            firstCommand,
-                            {
+                        try {
+                            await pusher.trigger(
+                                secondCommand,
+                                firstCommand,
+                                {
 
-                            }
-                        )
+                                }
+                            )
+                            // TODO : format output message
+                            chalk.italic(console.log(`"${chalk.green(firstCommand)}" sent to channel "${chalk.yellow(secondCommand)}" with {} `))
+                        } catch (error) {
+                            console.log(chalk.red(error.body))
+                        }
                     })()
                     // console.log({
                     //     message: firstCommand,
@@ -107,7 +145,7 @@ function main() {
         }
     }
     catch (error) {
-        console.log(" Error occured ");
+        console.log(" Error occured ", error);
     }
 }
 
