@@ -1,7 +1,1 @@
-{
-  "secret": "",
-  "key": "",
-  "cluster": "eu",
-  "tls": false,
-  "appId": 0
-}
+{}
