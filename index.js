@@ -5,23 +5,13 @@ const cfg = require('config')
 const Pusher = require("pusher");
 const { writeFileSync, readFileSync } = require('jsonfile')
 const chalk = require('chalk')
-const fs = require('fs')
 const path = require('path')
+const os = require('os')
 
-const configDir  = path.join(__dirname,"config")
-const configFile = path.join(configDir,'default.json')
+const fs = require('fs-extra')
 
-if(!fs.existsSync(configFile)){
-    if(!fs.existsSync(configDir)){
-        fs.mkdirSync(configDir)
-    }  
-    fs.writeFileSync(configFile,"{}")
-}
-
-const { hideBin } = require('yargs/helpers')
+const { hideBin } = require('yargs/helpers');
 const argv = yargs(hideBin(process.argv)).argv
-
-
 
 const isConfigured = () => {
     if (!cfg.has('secret') || cfg.get('secret') === "") {
@@ -45,7 +35,28 @@ const isInConfig = (property) => {
     return cfg.has(property)
 }
 
-function main() {
+
+
+async function main() {
+    const configDir = path.join(os.homedir(), ".pushert")
+    const configFile = path.join(os.homedir(),'default.json')
+
+    // const dirExist = fs.pathExistsSync(readConfigFile)
+
+    fs.ensureFileSync(configFile)
+
+    // if (!existsSync(configFile)){
+    //     console.log('config doesnot file exists');
+    //     if (!fs.existsSync(configDir)) {
+    //         fs.mkdirSync(configDir)
+    //     }
+    //     fs.writeFileSync(configFile, "{}")
+    // }else{
+    //     console.log("config exists");
+    //     const file = readFileSync(configFile)
+    //     console.log(file);
+    // }
+
     try {
         const { secret, id, cluster, tls, key, _ } = argv
         const [firstCommand, secondCommand, thirdCommand] = _
@@ -167,5 +178,6 @@ if (require.main === module) {
         main();
     } catch (error) {
         console.log(" Error occured ");
+        console.log(error);
     }
 }

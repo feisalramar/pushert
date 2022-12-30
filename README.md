@@ -17,7 +17,7 @@ Using Yarn
 # Configuration
 The default configuration file contains 
 
-`
+`json
     {
         "secret" :"",
         "key": "",
