@@ -2,13 +2,17 @@
   "name": "pushert",
   "version": "1.0.16",
   "description": "",
-  "main": "index.js",
+  "exports": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "help": "index.js --help",
-    "config": "index.js --help"
+    "config": "index.js --id=123xbr",
+    "config:key": "index.js --key=123",
+    "config:secret": "index.js --secret=abc",
+    "preinstall": "node ./src/configure.js"
   },
-  "bin": "index.js",
+  "type": "module",
+  "bin": "./src/index.js",
   "keywords": [
     "pusher",
     "Pusher Testing",
