@@ -1,5 +1,10 @@
 import os from "os";
 import path from "path";
+import { readFile } from "fs/promises";
+import chalk from "chalk";
+
+
+const packagePath = path.join(import.meta.url,"package.json")
 
 
 export const getDirPath = () =>{
@@ -29,7 +34,7 @@ export const getDirPath = () =>{
         //     break;
         // case 'sunos': console.log("SunOS platform");
         //     break;
-        default: console.log("unknown platform");
+        default: pathDir = path.join(baseDir,".pushert"); break;
     }
 
     return pathDir
@@ -37,4 +42,10 @@ export const getDirPath = () =>{
 
 export const getConfigPath = () =>{
     return path.join(getDirPath(),"config.json")
+}
+
+export const getVersion = async () => {
+    // const content = await readFile(packagePath)
+    const pkg = JSON.parse(await readFile(new URL('../../package.json', import.meta.url)));
+    console.log(`Pushert version - ${ chalk.bold(chalk.magenta(pkg.version)) }`)
 }

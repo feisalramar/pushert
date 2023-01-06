@@ -1,14 +1,14 @@
 {
   "name": "pushert",
-  "version": "1.0.16",
+  "version": "1.0.23",
   "description": "",
   "exports": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "help": "index.js --help",
-    "config": "index.js --id=123xbr",
-    "config:key": "index.js --key=123",
-    "config:secret": "index.js --secret=abc",
+    "help": "./src/index.js --help",
+    "config": "./src/index.js config --id=123 --id=ggg --secret=XXx",
+    "config:key": "./src/index.js config --key=123",
+    "config:secret": "./src/index.js config --secret=abc",
     "preinstall": "node ./src/configure.js"
   },
   "type": "module",
@@ -31,6 +31,7 @@
     "fs-extra": "^11.1.0",
     "jsonfile": "^6.1.0",
     "pusher": "^5.1.2",
-    "yargs": "^17.6.2"
+    "yargs": "^17.6.2",
+    "yargs-parser": "^21.1.1"
   }
 }
