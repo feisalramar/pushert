@@ -1,4 +1,5 @@
 import os from 'os';
+import path from 'path';
 import CONFIG_FILE_NAME from "./utils/constants.js";
 
 const getConfigFilePath = () => {
