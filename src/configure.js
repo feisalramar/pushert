@@ -56,5 +56,3 @@ const generateTemplate = async () =>  writeFile(getConfigPath(), JSON.stringify(
     })
 
 await configure(getDirPath())
-// await deleteConfigFile()
-// await deleteConfigPath()
