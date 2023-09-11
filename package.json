@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "help": "./src/index.js --help",
-    "config": "./src/index.js config --id=123 --id=ggg --secret=XXx",
-    "config:key": "./src/index.js config --key=123",
-    "config:secret": "./src/index.js config --secret=abc",
-    "preinstall": "node ./src/configure.js"
+    "config": "./src/index.js config ",
+    "subscribe": "./src/index.js subscribe test test ",
+    "publish": "./src/index.js publish test test test ",
+    "preinstall": "node ./src/index.js config"
   },
   "type": "module",
   "bin": "./src/index.js",
@@ -28,6 +28,7 @@
     "commander": "^11.0.0",
     "dotenv": "^16.3.1",
     "pusher": "^5.1.3",
+    "pusher-client": "^1.1.0",
     "yargs-parser": "^21.1.1"
   }
 }

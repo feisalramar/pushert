@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
 import { program } from "commander";
-import pusher from "pusher";
+import Pusher from "pusher";
+import PusherClient from "pusher-client";
 
 import loadConfig from "./loadConfiguration.js";
 import getUserInput from "./getUserInput.js";
 import saveConfig from "./saveConfiguration.js";
+
+Pusher.logToConsole = true;
 
 program.version("1.0.0").description("Pusher CLI for testing Pusher Channels");
 
@@ -17,11 +20,17 @@ program
     const apiKey = await getUserInput("Enter your Pusher API Key: ");
     const apiSecret = await getUserInput("Enter your Pusher API Secret: ");
 
-    const cluster =
-      (await getUserInput("Cluster eg. eu-west-1: ")) || "eu-west-1";
-    const tls = (await getUserInput("Enable TLS? (y/n): ")) || "y";
+    const cluster = (await getUserInput("Cluster eg. ap2 [ap2]: ")) || "ap2";
+    const tls = (await getUserInput("Enable TLS? (y/n) [Y]: ")) || "y";
 
-    const config = { key: apiKey, secret: apiSecret, id, cluster, tls };
+    const config = {
+      key: apiKey,
+      secret: apiSecret,
+      id,
+      cluster,
+      tls: tls === "y" ? true : false,
+    };
+
     saveConfig(config);
   });
 
@@ -46,21 +55,32 @@ program
       return;
     }
 
-    const pusherClient = new pusher({
-      appId: config.appId,
-      key: config.apiKey,
-      secret: config.apiSecret,
+    const pusher = new Pusher({
+      appId: config.id,
+      key: config.key,
+      secret: config.secret,
       cluster: config.cluster,
+      useTLS: config.tls,
     });
 
-    pusherClient.trigger(channel, event, JSON.parse(message));
+    const getData = (str) => {   
+        try {
+            const json = JSON.parse(str);
+            return json;
+         }catch (e) {
+            return str;
+         }
+    }
+
+    await pusher.trigger(channel, event, getData(message) || {});
+
     console.log(`Message published to ${channel} - Event: ${event}`);
   });
 
 program
   .command("subscribe <channel> <event>")
   .description("Subscribe to a Pusher channel and event")
-  .action((channel, event) => {
+  .action(async (channel, event) => {
     const config = loadConfig();
     if (!config) {
       console.error(
@@ -69,14 +89,13 @@ program
       return;
     }
 
-    const pusherClient = new pusher({
-      appId: config.appId,
-      key: config.apiKey,
-      secret: config.apiSecret,
+    const pusher = new PusherClient(config.key, {
       cluster: config.cluster,
+      useTLS: config.tls,
     });
 
-    const channelInstance = pusherClient.subscribe(channel);
+    const channelInstance = await pusher.subscribe(channel);
+
     channelInstance.bind(event, (data) => {
       console.log(`Received event '${event}' on channel '${channel}':`, data);
     });

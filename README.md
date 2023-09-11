@@ -15,52 +15,73 @@ Using Yarn
 `yarn global add pushert`
 
 # Configuration
-The default configuration file contains 
+
+The default configuration file contains,
 
 `json
     {
-        "secret" :"",
-        "key": "",
         "appId":"",
-        "tls": false,
-        "cluster": "eu"
+        "key": "",
+        "secret" :"",
+        "cluster": "ap2"
+        "tls": true,
     }
 `
 
-You must start configuring the tool to your pusher parameters
+configuration is done during installation or done manual via command
 
-`pushert config --secret=********* --tls=true --key=********* --id=12345`
+`pushert config`
 
+Configuration is saved on the following path
 
-# Usage 
+On Unix 
+`/home/username/.config/.pushert-config.json`
 
-Parameters 
+On Window 
+`C\\.config\.pushert-config.json`
 
-Cli expect 3 parameter 
+# Usage
 
-- Message : Content to be sent 
+## Publish event to the channel
+
+Cli expect 3 parameter
+
 - Channel : Channel to broadcast the message
-- Data (optional): Pusher event data to be sent in stringified JSON Format default is {}
+- Event : Event to be published
+- Message : Content to be sent { String, Stringified JSON }
 
-`pushert message channel data`
+`pushert publish <channel> <event> <message>`
 
 Example
 
-`pushert "Test Message" testchannel`
+`pushert pubslish TestChannel TestEvent "hello world"`
 
 or
 
-`pushert "This is the test message" TestChannel "{ name: 'John Doe'} `
+`pushert pubslish TestChannel TestEvent  "{ name: 'John Doe'} `
 
-# Uninstallation 
+## Subscribe to event from channel
+
+Cli expect 3 parameter
+
+- Channel : Channel to subscribe for events
+- Event : Event to be listened
+
+`pusher subscribe <channel> <event>`
+
+Example
+
+`pusher subscribe TestChannel TestEvent`
+
+
+# Uninstallation
 
 `npm uninstall -g pushert`
 
-or 
+or
 
 `npm remove -g pushert`
 
 Using Yarn
 
 `yarn global remove pushert`
-
