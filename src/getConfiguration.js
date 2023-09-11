@@ -5,3 +5,5 @@ const getConfigFilePath = () => {
     const configDir = os.platform() === 'win32' ? 'C:\\' : path.join(homeDir, '.config');
     return path.join(configDir, CONFIG_FILE_NAME);
 }
+
+export default getConfigFilePath;

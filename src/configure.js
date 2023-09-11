@@ -12,7 +12,7 @@ import {
 import template from "./utils/template.js"
 import {  getConfigPath, getDirPath } from "./utils/helpers.js";
 import chalk from "chalk";
-import {readConfig} from "./reader.js";
+import {readConfig} from "./getConfiguration.js";
 
 const configure = async (dir) => {
    return access(dir)
