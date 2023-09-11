@@ -10,7 +10,7 @@ import saveConfig from "./saveConfiguration.js";
 
 Pusher.logToConsole = true;
 
-program.version("1.0.0").description("Pusher CLI for testing Pusher Channels");
+program.version("1.1.0").description("Pusher CLI for testing Pusher Channels");
 
 program
   .command("config")
