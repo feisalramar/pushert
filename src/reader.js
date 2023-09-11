@@ -1,10 +1,7 @@
-import { readFile } from 'fs/promises'
-import { getConfigPath } from "./utils/helpers.js";
+import CONFIG_FILE_NAME from "./utils/constants";
 
-export const readConfig  = async () => {
-    const content = await readFile(getConfigPath())
-    const config = JSON.parse(content.toString())
-    return config
+const getConfigFilePath = () => {
+    const homeDir = os.homedir();
+    const configDir = os.platform() === 'win32' ? 'C:\\' : path.join(homeDir, '.config');
+    return path.join(configDir, CONFIG_FILE_NAME);
 }
-
-
