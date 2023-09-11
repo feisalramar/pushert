@@ -1,4 +1,5 @@
-import getConfigFilePath from "./getConfiguration";
+import getConfigFilePath from "./getConfiguration.js";
+import fs from "fs";
 
 const loadConfiguration = () => {
   const configFilePath = getConfigFilePath();

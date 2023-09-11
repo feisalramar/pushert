@@ -1,4 +1,5 @@
-import CONFIG_FILE_NAME from "./utils/constants";
+import os from 'os';
+import CONFIG_FILE_NAME from "./utils/constants.js";
 
 const getConfigFilePath = () => {
     const homeDir = os.homedir();
