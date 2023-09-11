@@ -8,7 +8,7 @@
     "help": "./src/index.js --help",
     "config": "./src/index.js config ",
     "subscribe": "./src/index.js subscribe test test ",
-    "publish": "./src/index.js publish test test test ",
+    "broadcast": "./src/index.js publish test test test ",
     "preinstall": "node ./src/index.js config"
   },
   "type": "module",
