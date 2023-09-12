@@ -1,6 +1,6 @@
 {
   "name": "pushert",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Pushert is a Command Line Interface (CLI) application for testing Pusher methods. With Pushert, you can easily configure Pusher credentials, publish messages to Pusher channels, and subscribe to events on Pusher channels.",
   "exports": "./src/index.js",
   "scripts": {
