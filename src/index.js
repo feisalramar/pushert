@@ -35,15 +35,6 @@ program
   });
 
 program
-  .command("channel <channel>")
-  .description("Configure Pusher default channel")
-  .action(async () => {
-    const config = loadConfig();
-    const channel = await getUserInput("channel name: ");
-    saveConfig({ ...config, channel });
-  });
-
-program
   .command("publish <channel> <event> <message>")
   .description("Publish a message to a Pusher channel")
   .action(async (channel, event, message) => {
