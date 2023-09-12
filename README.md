@@ -1,24 +1,30 @@
 # Pushert
-
-A command line tool to test pusher events on a channel
+z
+Pushert is a Command Line Interface (CLI) application for testing Pusher methods. With Pushert, you can easily configure Pusher credentials, publish messages to Pusher channels, and subscribe to events on Pusher channels.
 
 # Installation
 
-`npm install --global pushert`
+```bash 
+npm install --global pushert
+```
 
 or
 
-`npm i -g pushert`
+```bash 
+npm i -g pushert
+```
 
 Using Yarn
 
-`yarn global add pushert`
+```bash
+yarn global add pushert
+```
 
 # Configuration
 
 The default configuration file contains,
 
-`json
+```json
     {
         "appId":"",
         "key": "",
@@ -26,19 +32,25 @@ The default configuration file contains,
         "cluster": "ap2"
         "tls": true,
     }
-`
+```
 
 configuration is done during installation or done manual via command
 
-`pushert config`
+```bash 
+pushert config
+```
 
 Configuration is saved on the following path
 
 On Unix 
-`/home/username/.config/.pushert-config.json`
+```bash 
+/home/username/.config/.pushert-config.json
+```
 
 On Window 
-`C\\.config\.pushert-config.json`
+```bash 
+C:\\.config\.pushert-config.json
+```
 
 # Usage
 
@@ -50,15 +62,21 @@ Cli expect 3 parameter
 - Event : Event to be published
 - Message : Content to be sent { String, Stringified JSON }
 
-`pushert publish <channel> <event> <message>`
+```bash 
+pushert publish <channel> <event> <message>
+```
 
 Example
 
-`pushert pubslish TestChannel TestEvent "hello world"`
+```bash 
+pushert pubslish TestChannel TestEvent "hello world"
+```
 
 or
 
-`pushert pubslish TestChannel TestEvent  "{ name: 'John Doe'} `
+```bash 
+pushert pubslish TestChannel TestEvent  "{ name: 'John Doe'} 
+```
 
 ## Subscribe to event from channel
 
@@ -67,21 +85,30 @@ Cli expect 3 parameter
 - Channel : Channel to subscribe for events
 - Event : Event to be listened
 
-`pusher subscribe <channel> <event>`
+```bash 
+pusher subscribe <channel> <event>
+```
 
 Example
 
-`pusher subscribe TestChannel TestEvent`
-
+```bash  
+pusher subscribe TestChannel TestEvent
+```
 
 # Uninstallation
 
-`npm uninstall -g pushert`
+```bash 
+npm uninstall -g pushert
+```
 
 or
 
-`npm remove -g pushert`
+```bash 
+npm remove -g pushert
+```
 
 Using Yarn
 
-`yarn global remove pushert`
+```bash 
+yarn global remove pushert
+```
